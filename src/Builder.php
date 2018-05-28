@@ -1,9 +1,39 @@
 <?php
 
-namespace ArnoBirchler\Curl;
+namespace Arnobirchler\Curl;
 
 
 class Builder {
+
+
+    /**
+     * @var array
+     */
+    protected $curlDatas = [
+        'URL' => '',
+        'DATAS' => [],
+        'METHOD' => 'GET',
+        'JSON' => false,
+    ];
+
+    /**
+     * @param mixed $curlDatas
+     * @param string $key
+     */
+
+    protected function setCurlDatas($curlDatas, string $key)
+    {
+        $this->curlDatas[$key] = $curlDatas;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCurlDatas()
+    {
+        return $this->curlDatas;
+    }
+
 
     /**
      * Set the URL to which the request is to be sent
@@ -12,34 +42,39 @@ class Builder {
      * @return Builder
      */
 
-    protected $url = '';
-    protected $data;
-    protected $method = 'get';
-    protected $json = false;
-
-    protected function to(String $url){
-        return $this->url = $url;
+    public function to(String $url){
+        $this->setCurlDatas($url, 'URL');
+        return $this;
     }
 
-    protected function json(){
-        $this->json = true;
+
+    public function json(){
+        $this->setCurlDatas(true,'JSON');
     }
 
-    protected function get(){
+    public function get(){
         $this->method = 'get';
-        $this->send();
+        return $this->send();
     }
 
-    protected function post(){
+    public function post(){
         $this->method = 'post';
-        $this->send();
+        return $this->send();
     }
+
+
 
     protected function send(){
-        $response = \Ixudra\Curl\Facades\Curl::to($this->url)
+        $curl = new \Ixudra\Curl\CurlService();
+        $response = $curl->to($this->curlDatas['URL'])
             ->returnResponseObject()
-            ->withData( $this->url )
+            ->withData( $this->curlDatas['DATAS'] )
             ->get();
+        /*
+        $response = \Ixudra\Curl\Facades\Curl::to($this->curlDatas['URL'])
+            ->returnResponseObject()
+            ->withData( $this->curlDatas['DATAS'] )
+            ->get();*/
 
         if($response->status != 200){
             if(isset($response->error)){
@@ -50,7 +85,7 @@ class Builder {
             throw new \Exception('Error from distance site : ' . $message, 400);
         }
         if($response->content === "0" OR $response->content != false) {
-            if($this->json) {
+            if($this->curlDatas['JSON']) {
                 $value = $this->safe_json_decode($response->content);
                 if (is_string($value)) {
                     throw new \Exception('JSON Error : ' . $value);
@@ -58,7 +93,7 @@ class Builder {
                     return $value;
                 }
             }else{
-                return $response->content;
+                return $response;
             }
         }
         else{
@@ -66,11 +101,12 @@ class Builder {
         }
     }
 
-    protected function withData($data){
-        return $this->data = $data;
+    public function withDatas($data){
+        $this->setCurlDatas($data, 'DATAS');
+        return $this;
     }
 
-    private function safe_json_decode($value, $options = 0, $depth = 512){
+    protected function safe_json_decode($value, $options = 0, $depth = 512){
         $encoded = json_decode($value, $options, $depth);
         switch (json_last_error()) {
             case JSON_ERROR_NONE:
