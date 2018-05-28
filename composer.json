@@ -1,5 +1,5 @@
 {
-    "name": "arno-birchler/curl",
+    "name": "arnobirchler/curl",
     "description": "A High Level Requester",
     "keywords": ["codeception", "api", "curl"],
     "license": "MIT",
