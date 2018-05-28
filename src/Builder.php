@@ -102,7 +102,8 @@ class Builder {
     }
 
     public function withDatas($data){
-        return $this->setCurlDatas($data, 'DATAS');
+        $this->setCurlDatas($data, 'DATAS');
+        return $this;
     }
 
     protected function safe_json_decode($value, $options = 0, $depth = 512){

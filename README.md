@@ -11,3 +11,12 @@
 
 
 High level Requester based on Ixudra/curl 
+
+# Usage for laravel 
+
+```
+use Arnobirchler\Curl\CurlService;
+<--- ... --->
+$curl = new CurlService();
+$response = $curl->to('https://google.com')->withDatas(['foo' => 'bar'])->get();
+```
