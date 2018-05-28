@@ -1,2 +1,2 @@
-# api-communicator
-High level Requester 
+# Curl
+High level Requester based on Ixudra/curl 

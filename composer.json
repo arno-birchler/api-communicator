@@ -1,0 +1,43 @@
+{
+    "name": "arno-birchler/curl",
+    "description": "A High Level Requester",
+    "keywords": ["codeception", "api", "curl"],
+    "license": "MIT",
+    "type": "package",
+    "require": {
+        "php": "^7.1.3",
+        "ixudra/curl": "^6.16"
+    },
+    "autoload": {
+        "psr-4": {
+            "Arno-birchler\\Curl\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+				"Arno-birchler\\Curl\\CurlServiceProvider"
+			],
+			"aliases": {
+				"Curl": "Arno-birchler\\Curl\\Facades\\Curl"
+			}
+        }
+    },
+    "scripts": {
+        "unit-test": "codecept run unit --coverage --no-colors",
+        "functional-test": "codecept run functional",
+        "acceptance-test" : "codecept run acceptance"
+    },
+    "config": {
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "optimize-autoloader": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
