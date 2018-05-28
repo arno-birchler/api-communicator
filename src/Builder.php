@@ -17,8 +17,9 @@ class Builder {
     protected $method = 'get';
     protected $json = false;
 
-    protected function to(String $url){
-        return $this->url = $url;
+    public function to(String $url){
+        $this->url = $url;
+        return $this;
     }
 
     protected function json(){
