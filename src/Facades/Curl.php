@@ -1,7 +1,7 @@
 <?php
 namespace ArnoBirchler\Curl\Facades;
 
-use Illuminate\Support\Facades\Facades;
+use Illuminate\Support\Facades\Facade;
 
 class Curl extends Facade {
 
