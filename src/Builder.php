@@ -28,12 +28,12 @@ class Builder {
 
     protected function get(){
         $this->method = 'get';
-        $this->send();
+        return $this->send();
     }
 
     protected function post(){
         $this->method = 'post';
-        $this->send();
+        return $this->send();
     }
 
     protected function send(){
