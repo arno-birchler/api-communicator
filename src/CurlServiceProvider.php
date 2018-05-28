@@ -1,6 +1,6 @@
 <?php
 
-namespace ArnoBirchler\Curl;
+namespace Arnobirchler\Curl;
 
 use Illuminate\Support\ServiceProvider;
 
